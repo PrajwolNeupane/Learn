@@ -6,7 +6,7 @@ export default function HomePage({ open }) {
     const arr = [
         {point:0,type:"कुल दर्ता  / चलानी"},
         {point:5,type:"दर्ता "},
-        {point:1,type:" चलानी"},
+        {point:3,type:" चलानी"},
         {point:2,type:"कुल दर्ता  / चलानी"},
         {point:2,type:"कुल दर्ता  / चलानी"},
     ];
