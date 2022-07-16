@@ -7,7 +7,7 @@ export default function HomePage({ open }) {
         {point:0,type:"कुल दर्ता  / चलानी"},
         {point:5,type:"दर्ता "},
         {point:0,type:" चलानी"},
-        {point:0,type:"कुल दर्ता  / चलानी"},
+        {point:2,type:"कुल दर्ता  / चलानी"},
         {point:2,type:"कुल दर्ता  / चलानी"},
     ];
 
