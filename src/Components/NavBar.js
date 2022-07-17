@@ -5,14 +5,12 @@ import MenuIcon from '@mui/icons-material/Menu';
 import logo from '../img/logo.svg';
 import { Box } from '@mui/system';
 import DesktopWindowsIcon from '@mui/icons-material/DesktopWindows';
-import EmailIcon from '@mui/icons-material/Email';
-import DraftsIcon from '@mui/icons-material/Drafts';
-import BusinessIcon from '@mui/icons-material/Business';
-import ListIcon from '@mui/icons-material/List';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import NextWeekIcon from '@mui/icons-material/NextWeek';
+import AssignmentIcon from '@mui/icons-material/Assignment';
 import Order1 from './Order1';
 import Order2 from './Order2';
 import Order3 from './Order3';
-import Order4 from './Order4';
 
 export default function NavBar({setOpen,open}) {
     const [order,setOrder] = useState(null);
@@ -52,10 +50,10 @@ export default function NavBar({setOpen,open}) {
                             setOrder(1);
                         }
                     }}>
-                        <DraftsIcon sx={{fontSize:"30px",color:"white",transition:"0.3s","&:hover":{
+                        <AccountBalanceWalletIcon sx={{fontSize:"30px",color:"white",transition:"0.3s","&:hover":{
                             fontSize:"35px"
                         }}}/>
-                        <Typography variant='h4' sx={{ fontSize: "15px", color: "white" }}>दर्ता</Typography>
+                        <Typography variant='h4' sx={{ fontSize: "15px", color: "white" }}>बजेट</Typography>
                     </Stack>
                     <Stack sx={{gap:"5px",alignItems:"center",cursor:"pointer",width:"8vw"}} onClick={()=>{
                         if(order === 2){
@@ -64,10 +62,10 @@ export default function NavBar({setOpen,open}) {
                             setOrder(2);
                         }
                     }}>
-                        <EmailIcon sx={{fontSize:"30px",color:"white",transition:"0.3s","&:hover":{
+                        <NextWeekIcon sx={{fontSize:"30px",color:"white",transition:"0.3s","&:hover":{
                             fontSize:"35px"
                         }}}/>
-                        <Typography variant='h4' sx={{ fontSize: "15px", color: "white" }}>चलानी</Typography>
+                        <Typography variant='h4' sx={{ fontSize: "15px", color: "white" }}>खर्च</Typography>
                     </Stack>
                     <Stack sx={{gap:"5px",alignItems:"center",cursor:"pointer",width:"8vw"}} 
                     onClick={()=>{
@@ -77,23 +75,12 @@ export default function NavBar({setOpen,open}) {
                             setOrder(3);
                         }
                     }}>
-                        <ListIcon sx={{fontSize:"30px",color:"white",transition:"0.3s","&:hover":{
+                        <AssignmentIcon sx={{fontSize:"30px",color:"white",transition:"0.3s","&:hover":{
                             fontSize:"35px"
                         }}}/>
-                        <Typography variant='h4' sx={{ fontSize: "15px", color: "white" }}>आधारभूत</Typography>
+                        <Typography variant='h4' sx={{ fontSize: "15px", color: "white" }}>रिपोर्ट</Typography>
                     </Stack>
-                    <Stack sx={{gap:"5px",alignItems:"center",cursor:"pointer",width:"8vw"}}  onClick={()=>{
-                        if(order === 4){
-                            setOrder(null);
-                        }else{
-                            setOrder(4);
-                        }
-                    }}>
-                        <BusinessIcon sx={{fontSize:"30px",color:"white",transition:"0.3s","&:hover":{
-                            fontSize:"35px"
-                        }}}/>
-                        <Typography variant='h4' sx={{ fontSize: "15px", color: "white" }}>कार्यालय</Typography>
-                    </Stack>
+
                    </Stack>
                    {
                     order !== null ?  <Stack sx={{width:"18vw",backgroundColor:"secondary.main",paddingTop:"90px",transition:".3s"}}>
@@ -105,9 +92,6 @@ export default function NavBar({setOpen,open}) {
                     }
                     {
                         order === 3 ? <Order3 /> : <></>
-                    }
-                    {
-                        order === 4 ? <Order4 /> : <></>
                     }
                    </Stack> : <></>
                    }
