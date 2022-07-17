@@ -63,11 +63,12 @@ export default function NavBar({setOpen,open}) {
                         <Typography variant='h4' sx={{ fontSize: "15px", color: "white" }}>बजेट</Typography>
                     </Stack>
                     <Stack sx={{gap:"5px",alignItems:"center",cursor:"pointer",width:"8vw"}} onClick={()=>{
-                        if(order === 2){
+                        if(order === 1){
                             setOrder(null);
                         }else{
-                            setOrder(2);
+                            setOrder(null);
                         }
+                        Navigate("/expenditure");
                     }}>
                         <NextWeekIcon sx={{fontSize:"30px",color:"white",transition:"0.3s","&:hover":{
                             fontSize:"35px"

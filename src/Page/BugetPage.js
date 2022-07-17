@@ -6,29 +6,49 @@ import "@sbmdkl/nepali-datepicker-reactjs/dist/index.css";
 
 export default function BugetPage({ open }) {
 
-    const currencies = [
+    const revenue_code = [
         {
-            value: '200(बजेट)',
-            label: '200(बजेट)',
+            value: '2100(प्र.स)',
+            label: '2100(प्र.स)',
         },
         {
-            value: '200(बजेट)',
-            label: '200(बजेट)',
+            value: '2110(स्था.स)',
+            label: '2110(स्था.स)',
         },
         {
-            value: '200(बजेट)',
-            label: '200(बजेट)',
+            value: '1000(के.स)',
+            label: '1000(के.स)',
         },
         {
-            value: '200(बजेट)',
-            label: '200(बजेट)',
+            value: '1100(पा.स)',
+            label: '1100(पा.स)',
+        },
+    ];
+    const title_option = [
+        {
+            value: 'तलब(Salary)',
+            label: 'तलब(Salary)',
+        },
+        {
+            value: 'Construction(निर्माण)',
+            label: 'Construction(निर्माण)',
+        },
+        {
+            value: 'Mahangi(महंगी)',
+            label: 'Mahangi(महंगी)',
         },
     ];
 
-    const [currency, setCurrency] = useState('200(बजेट)');
+    const [code, setCode] = useState('2100(प्र.स)');
 
-    const handleChange = (event) => {
-        setCurrency(event.target.value);
+    const [title, setTitle] = useState('तलब(Salary)');
+
+    const changeCode = (event) => {
+        setCode(event.target.value);
+    };
+
+    const changeTitle = (event) => {
+        setTitle(event.target.value);
     };
     const [date, setDate] = useState("");
 
@@ -48,18 +68,33 @@ export default function BugetPage({ open }) {
                     <Typography variant='h3' sx={{ color: "secondary.main", fontSize: "18px" }}>मिति : </Typography>
                     <Calendar onChange={handleDate} />
                 </Stack>
+                <Stack sx={{flexDirection:"row",alignItems:"center",gap:"50px"}}>
                 <Stack sx={{ flexDirection: "row", gap: "10px", alignItems: "center" }}>
-                    <Typography variant='h3' sx={{ color: "secondary.main", fontSize: "18px" }}>शोरोत : </Typography>
+                    <Typography variant='h3' sx={{ color: "secondary.main", fontSize: "18px" }}>शीर्षक : </Typography>
                     <TextField id="outlined-select-currency"
                         select
-                        value={currency}
-                        onChange={handleChange} sx={{ backgroundColor: "white" }}>
-                        {currencies.map((option) => (
+                        value={title}
+                        onChange={changeTitle} sx={{ backgroundColor: "white" }}>
+                        {title_option.map((option) => (
                             <MenuItem key={option.value} value={option.value} sx={{ backgroundColor: "white" }}>
                                 {option.label}
                             </MenuItem>
                         ))}
                     </TextField>
+                </Stack>
+                <Stack sx={{ flexDirection: "row", gap: "10px", alignItems: "center" }}>
+                    <Typography variant='h3' sx={{ color: "secondary.main", fontSize: "18px" }}>शोरोत : </Typography>
+                    <TextField id="outlined-select-currency"
+                        select
+                        value={code}
+                        onChange={changeCode} sx={{ backgroundColor: "white" }}>
+                        {revenue_code.map((option) => (
+                            <MenuItem key={option.value} value={option.value} sx={{ backgroundColor: "white" }}>
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                    </TextField>
+                </Stack>
                 </Stack>
                 <Stack sx={{ flexDirection: "row", gap: "10px", alignItems: "flex-start" }}>
                     <Typography variant='h3' sx={{ color: "secondary.main", fontSize: "18px" }}>वर्णन : </Typography>
@@ -75,8 +110,8 @@ export default function BugetPage({ open }) {
                     width: "20%",
                     color: "white",
                     fontSize: "17px",
-                    backgroundColor: "primary.light", "&:hover": {
-                        backgroundColor: "primary.light",
+                    backgroundColor: "secondary.main", "&:hover": {
+                        backgroundColor: "secondary.main",
                     },
                     borderRadius: "3px",
                     border: "1px gray solid"
