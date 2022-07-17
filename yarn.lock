@@ -2292,6 +2292,11 @@
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.1.4.tgz#0c8b74c50f29ee44f423f7416829c0bf8bb5eb27"
   integrity sha512-LwzQKA4vzIct1zNZzBmRKI9QuNpLgTQMEjsQLf3BXuGYb3QPTP4Yjf6mkdX+X1mYttZ808QpOwAzZjv28kq7DA==
 
+"@sbmdkl/nepali-datepicker-reactjs@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@sbmdkl/nepali-datepicker-reactjs/-/nepali-datepicker-reactjs-1.2.1.tgz#901674f569bec66eea6410c9e229b0d4bf1366f0"
+  integrity sha512-87XeVPOOwkluJz3jz7nX7RSO9ivaX61hSFdToBlgnE/xUirBsfI3S15KjaqA6NF1t1cECgMT5gP2H4ZlTx4Bgg==
+
 "@sinclair/typebox@^0.24.1":
   version "0.24.20"
   resolved "https://registry.yarnpkg.com/@sinclair/typebox/-/typebox-0.24.20.tgz#11a657875de6008622d53f56e063a6347c51a6dd"
@@ -8829,6 +8834,11 @@ mkdirp@^1.0.3, mkdirp@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
+
+momment@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/momment/-/momment-0.0.1.tgz#0970260ebbeb505ce9b6f3fe929862e9bed30711"
+  integrity sha512-AvXVohTAJGdvRX+audOcqcQLsezKf4hR+QJf4WY2+sHoW37sejk1hrr0qBffSkwgoSZAjkuQDOqC1FtKE7y8Kw==
 
 morgan@^1.10.0, morgan@^1.8.2:
   version "1.10.0"

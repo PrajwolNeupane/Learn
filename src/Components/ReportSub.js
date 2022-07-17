@@ -4,12 +4,12 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ListIcon from '@mui/icons-material/List';
 import React from 'react'
 
-export default function Order3() {
+export default function ReportSub() {
 
    
   return (
     <Stack sx={{marginLeft:"10px",gap:"20px",flexDirection:"column"}}>
-        <Stack sx={{flexDirection:"row",gap:"10px",alignItems:"center"}}>
+        {/* <Stack sx={{flexDirection:"row",gap:"10px",alignItems:"center"}}>
             <BusinessCenterIcon sx={{fontSize:"30px",color:"text.main"}}/>
             <Typography variant='h2' sx={{color:"text.main",fontSize:"20px"}}>संघ-संस्था</Typography>
         </Stack>
@@ -36,7 +36,7 @@ export default function Order3() {
         <Stack sx={{flexDirection:"row",gap:"10px",alignItems:"center"}}>
             <ArrowForwardIosIcon sx={{fontSize:"20px",color:"white"}}/>
             <Typography variant='h3' sx={{color:"white",fontSize:"16px"}}>साधनको विवरण</Typography>
-        </Stack>
+        </Stack> */}
     </Stack>
   )
 }

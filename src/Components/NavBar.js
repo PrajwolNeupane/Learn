@@ -8,12 +8,16 @@ import DesktopWindowsIcon from '@mui/icons-material/DesktopWindows';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import NextWeekIcon from '@mui/icons-material/NextWeek';
 import AssignmentIcon from '@mui/icons-material/Assignment';
-import Order1 from './Order1';
-import Order2 from './Order2';
-import Order3 from './Order3';
+import ExpensesSub from './ExpensesSub';
+import BudgetSub from './BugetSub';
+import ReportSub from './ReportSub';
+import { useNavigate } from 'react-router-dom';
 
 export default function NavBar({setOpen,open}) {
+
     const [order,setOrder] = useState(null);
+    const Navigate = useNavigate();
+
     return (
         <>
             <AppBar elevation={0} position="fixed">
@@ -40,15 +44,18 @@ export default function NavBar({setOpen,open}) {
                         }}>
                         <DesktopWindowsIcon sx={{fontSize:"30px",color:"white",transition:"0.3s","&:hover":{
                             fontSize:"35px"
-                        }}}/>
+                        }}} onClick={() => {
+                            Navigate("/");
+                        }}/>
                         <Typography variant='h4' sx={{ fontSize: "15px", color: "white" }}>ड्यासबोर्ड</Typography>
                     </Stack>
                     <Stack sx={{gap:"5px",alignItems:"center",cursor:"pointer",width:"8vw"}} onClick={()=>{
                         if(order === 1){
                             setOrder(null);
                         }else{
-                            setOrder(1);
+                            setOrder(null);
                         }
+                        Navigate("/budget");
                     }}>
                         <AccountBalanceWalletIcon sx={{fontSize:"30px",color:"white",transition:"0.3s","&:hover":{
                             fontSize:"35px"
@@ -85,13 +92,13 @@ export default function NavBar({setOpen,open}) {
                    {
                     order !== null ?  <Stack sx={{width:"18vw",backgroundColor:"secondary.main",paddingTop:"90px",transition:".3s"}}>
                     {
-                        order === 1 ? <Order1 /> : <></>
+                        order === 1 ? <BudgetSub /> : <></>
                     }
                     {
-                        order === 2 ? <Order2 /> : <></>
+                        order === 2 ? <ExpensesSub /> : <></>
                     }
                     {
-                        order === 3 ? <Order3 /> : <></>
+                        order === 3 ? <ReportSub /> : <></>
                     }
                    </Stack> : <></>
                    }
