@@ -1,10 +1,19 @@
-import { Box, Button, Stack, TextField, Typography, MenuItem } from '@mui/material'
-import React, { useState } from 'react';
+import { Box, Button, Stack, TextField, Typography, MenuItem, Snackbar } from '@mui/material'
+import React, { useRef, useState } from 'react';
 import Calendar from "@sbmdkl/nepali-datepicker-reactjs";
 import "@sbmdkl/nepali-datepicker-reactjs/dist/index.css";
+import { collection, addDoc } from 'firebase/firestore';
+import {db} from '../Firebase/firebase-connection';
 
 
 export default function BugetPage({ open }) {
+
+
+    const descRef = useRef();
+    const amountRef = useRef();
+    const [send,setSend] = useState(false);
+
+
 
     const revenue_code = [
         {
@@ -30,12 +39,12 @@ export default function BugetPage({ open }) {
             label: 'तलब(Salary)',
         },
         {
-            value: 'Construction(निर्माण)',
-            label: 'Construction(निर्माण)',
+            value: 'निर्माण(Construction)',
+            label: 'निर्माण(Construction)',
         },
         {
-            value: 'Mahangi(महंगी)',
-            label: 'Mahangi(महंगी)',
+            value: 'महंगी(Mahangi)',
+            label: 'महंगी(Mahangi)',
         },
     ];
 
@@ -56,9 +65,25 @@ export default function BugetPage({ open }) {
         setDate({ date: bsDate });
     };
 
-    const handleSubmmit = () => {
-        console.log(date.date);
-    }
+    const handleSubmmit = async () => {
+        const BudgetCollection = collection(db,"Budget");
+       try{
+        await addDoc(BudgetCollection,{
+            date:date.date,
+            title:title,
+            code:code,
+            desc:descRef.current.value,
+            budgetAmount:amountRef.current.value,
+            expenseAmount:0
+        });
+        setSend(true);
+        descRef.current.value = ''
+        amountRef.current.value = ""
+
+       }catch(e){
+        console.log(e);
+       }
+    }   
 
     return (
         <Box sx={{ marginTop: "64px", position: "absolute", marginLeft: `${open === true ? "8%" : "0%"}`, transition: ".5s", width: `${open === true ? '92%' : '100%'}`, backgroundColor: '#f4f5fa' }}>
@@ -98,11 +123,11 @@ export default function BugetPage({ open }) {
                 </Stack>
                 <Stack sx={{ flexDirection: "row", gap: "10px", alignItems: "flex-start" }}>
                     <Typography variant='h3' sx={{ color: "secondary.main", fontSize: "18px" }}>वर्णन : </Typography>
-                    <textarea placeholder='वर्णन लेखन ठाउँ' style={{ resize: "none", height: "200px", width: "1100px", ontSize: "16px", border: "1px solid #6c757d", borderRadius: "3px", padding: "1px 5px" }} />
+                    <textarea placeholder='वर्णन लेखन ठाउँ' style={{ resize: "none", height: "200px", width: "1100px", ontSize: "16px", border: "1px solid #6c757d", borderRadius: "3px", padding: "1px 5px" }} ref={descRef}/>
                 </Stack>
                 <Stack sx={{ flexDirection: "row", gap: "10px", alignItems: "center" }}>
                     <Typography variant='h3' sx={{ color: "secondary.main", fontSize: "18px" }}>रकम : </Typography>
-                    <input type={"text"} placeholder="रु" style={{ fontSize: "18px", border: "1px solid #6c757d", borderRadius: "3px", padding: "1px 5px" }} />
+                    <input type={"number"} placeholder="रु" style={{ fontSize: "18px", border: "1px solid #6c757d", borderRadius: "3px", padding: "1px 5px" }} ref={amountRef}/>
                 </Stack>
                 <Button onClick={() => {
                     handleSubmmit();
@@ -119,6 +144,11 @@ export default function BugetPage({ open }) {
                     जडान गर्नुहोस्
                 </Button>
             </Stack>
-        </Box>
+            <Snackbar open={send} onClose={() => {
+                setSend(false);
+            }} message={"रेकर्ड सफलतापूर्वक भयो"}
+            autoHideDuration={3000}
+            />
+        </Box> 
     )
 }

@@ -1,5 +1,5 @@
 import { AppBar, Avatar, Stack, Toolbar, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PersonIcon from '@mui/icons-material/Person';
 import MenuIcon from '@mui/icons-material/Menu';
 import logo from '../img/logo.svg';
@@ -12,97 +12,121 @@ import ExpensesSub from './ExpensesSub';
 import BudgetSub from './BugetSub';
 import ReportSub from './ReportSub';
 import { useNavigate } from 'react-router-dom';
+import { signOut } from 'firebase/auth';
+import { auth } from '../Firebase/firebase-auth.js';
+import { useSelector } from 'react-redux';
 
-export default function NavBar({setOpen,open}) {
+export default function NavBar({ setOpen, open }) {
 
-    const [order,setOrder] = useState(null);
+    const [order, setOrder] = useState(null);
     const Navigate = useNavigate();
+    const user = useSelector(state => state.user);
+
+
 
     return (
         <>
             <AppBar elevation={0} position="fixed">
                 <Toolbar sx={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-                    <MenuIcon sx={{fontSize:"35px",color:"white",cursor:"pointer"}} onClick={() => {
+                    <MenuIcon sx={{ fontSize: "35px", color: "white", cursor: "pointer" }} onClick={() => {
                         setOpen(!open);
-                    }}/>
-                   <Stack sx={{ flexDirection: "row", alignItems: "center", gap: "10px" }}>
-                    <img src={logo} style={{width:"50px"}} alt="ok"/>
-                   <Typography variant='h2' sx={{ fontSize: "22px", color: "white" }}>हाम्रो नगरपालिका, कार्यालयको ठेगाना</Typography>
-                   </Stack>
+                    }} />
+                    <Stack sx={{ flexDirection: "row", alignItems: "center", gap: "10px" }}>
+                        <img src={logo} style={{ width: "50px" }} alt="ok" />
+                        <Typography variant='h2' sx={{ fontSize: "22px", color: "white" }}>हाम्रो नगरपालिका, कार्यालयको ठेगाना</Typography>
+                    </Stack>
                     <Stack sx={{ flexDirection: "row", alignItems: "center", gap: "10px" }}>
                         <Typography variant='h2' sx={{ fontSize: "18px", color: "white" }}>कर्मचारीको नाम</Typography>
-                        <Avatar sx={{ backgroundColor: "white" }}><PersonIcon sx={{ fontSize: "35px", color: "primary.main" }} /></Avatar>
-                        <Avatar sx={{ backgroundColor: "#32CD32" ,color:"#32CD32",position:"absolute",width:"10px",height:"10px",bottom:"12px",right:"25px"}}></Avatar>
+                        <Avatar sx={{ backgroundColor: "white" }}><PersonIcon sx={{ fontSize: "35px", color: "primary.main" }} onClick={
+                            async () => {
+                                try {
+                                    await signOut(auth);
+                                    Navigate("/");
+                                } catch (e) {
+                                    console.log(e);
+                                }
+                            }
+                        } /></Avatar>
+                        <Avatar sx={{ backgroundColor: "#32CD32", color: "#32CD32", position: "absolute", width: "10px", height: "10px", bottom: "12px", right: "25px" }}></Avatar>
                     </Stack>
                 </Toolbar>
             </AppBar>
-            <Box sx={{ position: "absolute", height: "100%", backgroundColor: "#eb9250",transition: ".5s", transform: `translateX(${open === true ? "0px" : "-100%"})`, display: "flex",flexDirection: "row", overflow: "hidden",zIndex:"1" }}>
-                   <Stack sx={{gap:"30px"}}>
-                   <Stack sx={{marginTop:"100px",gap:"5px",alignItems:"center",cursor:"pointer",width:"8vw"
-                        }}  onClick={()=>{
-                           setOrder(null);
-                        }}>
-                        <DesktopWindowsIcon sx={{fontSize:"30px",color:"white",transition:"0.3s","&:hover":{
-                            fontSize:"35px"
-                        }}} onClick={() => {
+            <Box sx={{ position: "fixed", height: "100%", backgroundColor: "#eb9250", transition: ".5s", transform: `translateX(${open === true ? "0px" : "-100%"})`, display: "flex", flexDirection: "row", overflow: "hidden", zIndex: "1" }}>
+                <Stack sx={{ gap: "30px" }}>
+                    <Stack sx={{
+                        marginTop: "100px", gap: "5px", alignItems: "center", cursor: "pointer", width: "8vw"
+                    }} onClick={() => {
+                        setOrder(null);
+                    }}>
+                        <DesktopWindowsIcon sx={{
+                            fontSize: "30px", color: "white", transition: "0.3s", "&:hover": {
+                                fontSize: "35px"
+                            }
+                        }} onClick={() => {
                             Navigate("/");
-                        }}/>
+                        }} />
                         <Typography variant='h4' sx={{ fontSize: "15px", color: "white" }}>ड्यासबोर्ड</Typography>
                     </Stack>
-                    <Stack sx={{gap:"5px",alignItems:"center",cursor:"pointer",width:"8vw"}} onClick={()=>{
-                        if(order === 1){
+                    <Stack sx={{ gap: "5px", alignItems: "center", cursor: "pointer", width: "8vw" }} onClick={() => {
+                        if (order === 1) {
                             setOrder(null);
-                        }else{
+                        } else {
                             setOrder(null);
                         }
                         Navigate("/budget");
                     }}>
-                        <AccountBalanceWalletIcon sx={{fontSize:"30px",color:"white",transition:"0.3s","&:hover":{
-                            fontSize:"35px"
-                        }}}/>
+                        <AccountBalanceWalletIcon sx={{
+                            fontSize: "30px", color: "white", transition: "0.3s", "&:hover": {
+                                fontSize: "35px"
+                            }
+                        }} />
                         <Typography variant='h4' sx={{ fontSize: "15px", color: "white" }}>बजेट</Typography>
                     </Stack>
-                    <Stack sx={{gap:"5px",alignItems:"center",cursor:"pointer",width:"8vw"}} onClick={()=>{
-                        if(order === 1){
+                    <Stack sx={{ gap: "5px", alignItems: "center", cursor: "pointer", width: "8vw" }} onClick={() => {
+                        if (order === 1) {
                             setOrder(null);
-                        }else{
+                        } else {
                             setOrder(null);
                         }
                         Navigate("/expenditure");
                     }}>
-                        <NextWeekIcon sx={{fontSize:"30px",color:"white",transition:"0.3s","&:hover":{
-                            fontSize:"35px"
-                        }}}/>
+                        <NextWeekIcon sx={{
+                            fontSize: "30px", color: "white", transition: "0.3s", "&:hover": {
+                                fontSize: "35px"
+                            }
+                        }} />
                         <Typography variant='h4' sx={{ fontSize: "15px", color: "white" }}>खर्च</Typography>
                     </Stack>
-                    <Stack sx={{gap:"5px",alignItems:"center",cursor:"pointer",width:"8vw"}} 
-                    onClick={()=>{
-                        if(order === 3){
-                            setOrder(null);
-                        }else{
-                            setOrder(3);
-                        }
-                    }}>
-                        <AssignmentIcon sx={{fontSize:"30px",color:"white",transition:"0.3s","&:hover":{
-                            fontSize:"35px"
-                        }}}/>
+                    <Stack sx={{ gap: "5px", alignItems: "center", cursor: "pointer", width: "8vw" }}
+                        onClick={() => {
+                            if (order === 3) {
+                                setOrder(null);
+                            } else {
+                                setOrder(3);
+                            }
+                        }}>
+                        <AssignmentIcon sx={{
+                            fontSize: "30px", color: "white", transition: "0.3s", "&:hover": {
+                                fontSize: "35px"
+                            }
+                        }} />
                         <Typography variant='h4' sx={{ fontSize: "15px", color: "white" }}>रिपोर्ट</Typography>
                     </Stack>
 
-                   </Stack>
-                   {
-                    order !== null ?  <Stack sx={{width:"18vw",backgroundColor:"secondary.main",paddingTop:"90px",transition:".3s"}}>
-                    {
-                        order === 1 ? <BudgetSub /> : <></>
-                    }
-                    {
-                        order === 2 ? <ExpensesSub /> : <></>
-                    }
-                    {
-                        order === 3 ? <ReportSub /> : <></>
-                    }
-                   </Stack> : <></>
-                   }
+                </Stack>
+                {
+                    order !== null ? <Stack sx={{ width: "18vw", backgroundColor: "secondary.main", paddingTop: "90px", transition: ".3s" }}>
+                        {
+                            order === 1 ? <BudgetSub /> : <></>
+                        }
+                        {
+                            order === 2 ? <ExpensesSub /> : <></>
+                        }
+                        {
+                            order === 3 ? <ReportSub /> : <></>
+                        }
+                    </Stack> : <></>
+                }
             </Box>
         </>
     )
