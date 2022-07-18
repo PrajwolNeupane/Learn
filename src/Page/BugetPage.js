@@ -74,7 +74,8 @@ export default function BugetPage({ open }) {
             code:code,
             desc:descRef.current.value,
             budgetAmount:amountRef.current.value,
-            expenseAmount:0
+            expenseAmount:0,
+            remainingAmount:0
         });
         setSend(true);
         descRef.current.value = ''
