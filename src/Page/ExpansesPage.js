@@ -1,8 +1,9 @@
-import { Box, Typography, Stack, Snackbar } from '@mui/material'
+import { Box, Typography, Stack, Snackbar, InputBase } from '@mui/material'
 import React, { useState, useEffect, useRef } from 'react';
 import { collection, setDoc, doc, query, orderBy, onSnapshot, updateDoc } from 'firebase/firestore';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { db } from '../Firebase/firebase-connection';
+import { useSelector } from 'react-redux'
 
 export default function ExpansesPage({ open }) {
 
@@ -10,13 +11,14 @@ export default function ExpansesPage({ open }) {
 
     const [data, setData] = useState([]);
     const exAmountRef = useRef();
+    const [exAmount,setExAmount] = useState(null);
+    const myRef = useRef();
     const [send, setSend] = useState(false);
-    const [totalBudget, setBudget] = useState(0);
     const [totalExpense, setExpense] = useState(0);
 
+    const budget = useSelector(state => state.budget);
+    const totalBudget = useSelector(state => state.totalBudget);
 
-    var temp_budget = 0;
-    var temp_expenses = 0;
 
 
     const getData = async () => {
@@ -41,24 +43,28 @@ export default function ExpansesPage({ open }) {
 
     const onClick = async (id, date, title, code, desc, budget,expenses) => {
         try {
+           
             await setDoc(doc(db, "Budget", id), {
                 date: date,
                 title: title,
                 code: code,
                 desc: desc,
                 budgetAmount: budget,
-                expenseAmount: Number(expenses) + Number(exAmountRef.current.value),
-                remainingAmount:Number(budget) - Number(expenses) - Number(exAmountRef.current.value)
+                expenseAmount:expenses + Number(exAmount),
+                remainingAmount:budget - expenses - Number(exAmount)
             });
             setSend(true);
-            exAmountRef.current.value = ""
-            // totalData(data);
+           
         } catch (e) {
             console.log(e);
         }
     }
 
+   
+
     // const totalData = (data) => {
+    //     var temp_budget = 0;
+    //     var temp_expenses = 0;
 
     //     data.map((curr) => {
     //         temp_budget += Number(curr.budgetAmount);
@@ -66,12 +72,14 @@ export default function ExpansesPage({ open }) {
     //     });
     //     setBudget(temp_budget);
     //     setExpense(temp_expenses);
+    //     // console.log(totalBudget,totalExpense);
     // }
     useEffect(() => {
-        getData();
+        // totalData(budget.data);
 
 
-    }, []);
+    }, [budget.data]);
+   
 
 
 
@@ -91,20 +99,20 @@ export default function ExpansesPage({ open }) {
                         <Typography variant="h3" sx={{ fontSize: "20px", color: "red" }}>
                             कुल खर्च : </Typography>
                         <Typography variant="h3" sx={{ fontSize: "20px", color: "red" }}>
-                            रु {totalExpense}/- </Typography>
+                            रु {"0"}/- </Typography>
                     </Stack>
                     <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                         <Typography variant="h3" sx={{ fontSize: "20px", color: "blue" }}>
                             बाकी रखम :</Typography>
                         <Typography variant="h3" sx={{ fontSize: "20px", color: "blue" }}>
-                            रु {Number(totalBudget) - Number(totalExpense)} /- </Typography>
+                            रु {"0"} /- </Typography>
                     </Stack>
                 </Stack> */}
             </Stack>
             <Stack sx={{ gap: "20px", margin: "80px 20px" }}>
                 {
-                    data.map((curr, indx) => (
-                        <Stack sx={{ padding: "25px 10px", backgroundColor: "white", borderRadius: "5px", border: "1px solid gray", gap: "10px" }}>
+                    budget.data?.map((curr, indx) => (
+                        <Stack key={indx} sx={{ padding: "25px 10px", backgroundColor: "white", borderRadius: "5px", border: "1px solid gray", gap: "10px" }}>
                             <Stack sx={{ flexDirection: "row",gap:"5px" }}>
                                 <Typography variant='h3' sx={{ color: "secondary.main", fontSize: "18px" }}>मिति :</Typography>
                                 <Typography variant='h2' sx={{ color: "secondary.main", fontSize: "18px" }}>
@@ -144,10 +152,17 @@ export default function ExpansesPage({ open }) {
                                     <Typography variant='h3' sx={{ color: "secondary.main", fontSize: "18px" }}>
                                         खर्च
                                     </Typography>
-                                    <input type={"text"} placeholder="खर्च" ref={exAmountRef} />
+                                    <input placeholder="खर्च" type='number' onChange={(e) => {
+                                        setExAmount(e.target.value);
+                                    }} />
                                     <button
                                         onClick={() => {
-                                            onClick(curr.id, curr.date, curr.title, curr.code, curr.desc, curr.budgetAmount,curr.expenseAmount);
+                                            if(curr.remainingAmount >= Number(exAmount)){
+                                                onClick(curr.id, curr.date, curr.title, curr.code, curr.desc, curr.budgetAmount,curr.expenseAmount);
+                                               
+                                            }else{
+                                                alert("अवैध रकम");
+                                            }
                                         }}
                                     >
                                         जडान गर्नुहोस्

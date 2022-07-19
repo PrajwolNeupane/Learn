@@ -13,6 +13,9 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './Firebase/firebase-auth';
 import HomePage from './Page/HomePage';
 import ProtectRoute from './Components/ProtectRoute';
+import { collection, setDoc, doc, query, orderBy, onSnapshot, updateDoc } from 'firebase/firestore';
+import {db} from './Firebase/firebase-connection';
+import BudgetSub from './Components/BugetSub';
 
 
 function App() {
@@ -22,10 +25,37 @@ function App() {
   const actions = bindActionCreators(actionCreators, dispatch);
 
   const user = useSelector(state => state.user);
+  const budget = useSelector(state => state.budget);
+
+
 
   const [load, setLoad] = useState(true);
 
+
+  const getData = async () => {
+    const Collection = collection(db, "Budget");
+    try {
+
+        const q = query(Collection, orderBy("date", "desc"));
+        onSnapshot(q, (snapshot) => {
+            actions.setBudget(
+                snapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }))
+            );
+        });
+
+
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+
   useEffect(() => {
+    getData();
+   
     onAuthStateChanged(auth, authUser => {
       if (user) {
         actions.setUser(authUser);
@@ -36,7 +66,9 @@ function App() {
     setTimeout(function () {
       setLoad(false);
     }, 1000);
+    
   }, []);
+
 
 
   return (
